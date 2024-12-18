@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+    <a href="https//Kohuminami.4takumondai.jp" target="_blank">
+        </a>
+        <head>
+<meta charset="utf-8">
+<title>4択クイズ</title>
+</head>
+<body>
+<h1>4択クイズ</h1>
+<hr>
+<h2>問題</h2>
+<div id="text_q"></div>
+<h2>選択</h2>
+<div id="text_s"></div>
+<h2>解答</h2>
+<div id="text_a"></div>
+<body bgcolor="#f0f8ff">
+</body>
+ 
+<script type="text/javascript">
+//問題と解答
+qa = new Array();
+qa[0] = ["destroy", "破壊する", "拡大する", "心配する","望む", 1];
+qa[1] = ["conserve", "破壊する", "植える", "覆う","保護する" ,4];
+qa[2] = ["efficent", "値する", "確かな", "効果的な","魅了する", 3];
+qa[3] = ["typical", "典型的な", "極端な", "緊急の","身体的な", 1];
+qa[4] = ["philosophy", "物理学の", "哲学の", "心理学の","特定の", 2];
+qa[5] = ["characteristic", "起源", "儀式","印象", "特徴", 4];
+qa[6] = ["moment", "信頼", "瞬間", "統計", "準備",2];
+qa[7] = ["career", "職業", "運ぶ", "通貨", "集団",1];
+qa[8] = ["superstition", "考慮", "革新", "迷信","遂行", 3];
+qa[9] = ["physics", "化学", "物理学", "数学","倫理学", 2];
+qa[10] = ["bustling", "賑やか", "楽しむ", "興奮する","騒がしい", 1];
+qa[11] = ["capital", "地域", "市街地", "田舎","首都" ,4];
+qa[12] = ["display", "視聴する", "作成する", "展示する","縁取る", 3];
+qa[13] = ["physician", "内科医", "小児科医", "外科医","救急科医", 1];
+qa[14] = ["priority", "成功", "優先", "失業","関係する", 2];
+qa[15] = ["opportunity", "偶然", "感謝","会議", "機会", 4];
+qa[16] = ["arthritis", "アキレス腱", "関節炎", "胃腸炎", "肺炎",2];
+qa[17] = ["tiny", "とても小さい", "小さい", "とても大きい", "大きい",1];
+qa[18] = ["describe", "発表する", "投稿する", "記述する","提出する", 3];
+qa[19] = ["failure", "ファイル", "失敗", "成功","功績", 2];
+//初期設定
+q_max = 10; //出題数
+q_sel = 4; //選択肢の数
+ 
+setReady();
+ 
+//初期設定
+function setReady() {
+    count = 0; //問題番号
+    ansers = new Array(); //解答記録
+   
+    //最初の問題
+    quiz();
+}
+ 
+//問題表示
+ 
+function quiz() {
+    var s, n;
+    //問題
+        rnd = Math.floor(Math.random() * qa.length); //乱数
+ 
+    document.getElementById("text_q").innerHTML = (count + 1) + "問目：" + qa[rnd][0];
+    //選択肢
+    s = "";
+for (n=1;n<=q_sel;n++) if (qa[rnd][n] != "") {
+       
+        s += "【<a href='javascript:anser(" + n + ")'>" + n + "：" + qa[rnd][n] + "</a>】";
+    }
+    document.getElementById("text_s").innerHTML = s;
+}
+ 
+//解答表示
+function anser(num) {
+    var s;
+    s = (count + 1) + "問目：";
+    //答え合わせ
+    if (num == qa[rnd][q_sel + 1]) {
+        //正解
+        ansers[count] = "○";
+    } else {
+        ansers[count] = "×";
+    }
+    s += ansers[count] + qa[rnd][num];
+    document.getElementById("text_a").innerHTML = s;
+   
+    //次の問題を表示
+    count++;
+    if (count < q_max) {
+        quiz();
+    } else {
+        //終了
+   
+s = "<table  border='2'><caption>成績発表</caption>";
+        //1行目
+        s += "<tr><th>問題</th>";
+        for (n=0;n<qa.length;n++) {
+                s += "<th>" + (n+1) + "</th>";
+        }
+       
+        s += "</tr>";
+        //2行目
+        s += "<tr><th>成績</th>";
+        for (n=0;n<qa.length;n++) {
+            s += "<td>" + ansers[n] + "</td>";
+        }
+        s += "</tr>";
+        s += "</table>";
+        document.getElementById("text_q").innerHTML = s;
+        //次の選択肢
+        s += "【<a href='javascript:setReady()'>次の問題に進む</a>】";
+        s += "【<a href=''>ホームに戻る</a>】";
+        document.getElementById("text_s").innerHTML = s;
+    }
+}
+</script>
+</body>
+</html>
